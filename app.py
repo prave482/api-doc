@@ -1,5 +1,5 @@
 import streamlit as st
-from rag.loader import load_pdf
+from rag.loader import load_pdf, load_url
 from rag.chunker import chunk_document
 from rag.vectorstore import VectorStore
 from rag.pipeline import RagPipeline
@@ -24,17 +24,26 @@ with st.sidebar:
     uploaded_file = st.file_uploader(
         "Upload API Documentation (PDF)", type="pdf"
     )
+    url_input = st.text_input("Or enter API Documentation URL")
 
-    if uploaded_file:
+    if uploaded_file or url_input:
         with st.spinner("Processing document..."):
-            pages = load_pdf(uploaded_file, uploaded_file.name)
-            chunks = chunk_document(pages)
-            st.session_state.vector_store.add_chunks(chunks)
-            st.session_state.pipeline = RagPipeline(
-                st.session_state.vector_store
-            )
-
-        st.success("Document indexed successfully")
+            try:
+                if uploaded_file:
+                    pages = load_pdf(uploaded_file, uploaded_file.name)
+                elif url_input:
+                    pages = load_url(url_input)
+                else:
+                    st.error("Please provide a valid file or URL.")
+                    st.stop()
+                chunks = chunk_document(pages)
+                st.session_state.vector_store.add_chunks(chunks)
+                st.session_state.pipeline = RagPipeline(
+                    st.session_state.vector_store
+                )
+                st.success("Document indexed successfully")
+            except Exception as e:
+                st.error(f"Error processing document: {str(e)}")
 
 # ---------------------------
 # Main UI

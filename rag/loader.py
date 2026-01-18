@@ -2,6 +2,7 @@
 # Handles loading and preprocessing of API documentation
 
 import os
+import httpx
 from pypdf import PdfReader
 
 
@@ -36,3 +37,20 @@ def load_pdf(uploaded_file, filename):
         })
 
     return pages
+
+
+def load_url(url):
+    """
+    Load and extract text from a URL.
+
+    Args:
+        url: The URL to fetch content from
+
+    Returns:
+        List of dicts with 'page_number' and 'text'
+    """
+    response = httpx.get(url, timeout=30.0)
+    response.raise_for_status()
+    content = response.text
+    # For simplicity, treat the entire content as one page
+    return [{"page_number": 1, "text": content}]
