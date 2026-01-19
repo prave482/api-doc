@@ -10,11 +10,12 @@ Retrieved Documentation:
 
 Question: {query}
 
-Instructions:
-- Explain the API endpoint based solely on the retrieved documentation.
-- If the information is not found in the provided documentation, respond with: "Not found in provided documentation"
-- Always include source references (page number and/or section name) at the end of your answer.
-- Be concise and accurate.
+ Instructions:
+ - Provide a detailed, elaborated explanation of the API endpoint based solely on the retrieved documentation.
+ - Include examples, step-by-step details, and any relevant parameters or responses where applicable.
+ - If the information is not found in the provided documentation, respond with: "Not found in provided documentation"
+ - Always include source references (page number and/or section name) at the end of your answer.
+ - Be comprehensive and accurate.
 
 Answer:
 """

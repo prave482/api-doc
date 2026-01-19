@@ -70,14 +70,15 @@ class RagPipeline:
                         "role": "system",
                         "content": (
                             "You are an API documentation assistant. "
-                            "Answer strictly using the provided documentation only. "
+                            "Provide detailed, elaborated explanations using the provided documentation only. "
+                            "Include examples and step-by-step details where applicable. "
                             "If answer is not in docs, say: 'Not found in provided documentation'."
                         )
                     },
                     {"role": "user", "content": prompt}
                 ],
-                temperature=0.1,
-                max_tokens=1000
+                temperature=0.2,
+                max_tokens=3000
             )
         except Exception as e:
             return {
