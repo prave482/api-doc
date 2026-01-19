@@ -1,0 +1,11 @@
+[project]
+name = "api-doc-rag"
+version = "0.1.0"
+dependencies = [
+  "fastapi",
+  "uvicorn",
+  "pypdf",
+  "requests",
+  "python-dotenv",
+  "groq"
+]
